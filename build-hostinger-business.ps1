@@ -25,9 +25,9 @@ if (-not $hasPhp) {
     exit 1
 }
 
-Write-Host "  ✓ npm found: $(npm --version)" -ForegroundColor Green
-Write-Host "  ✓ composer found: $(composer --version)" -ForegroundColor Green
-Write-Host "  ✓ php found: $(php --version | Select-Object -First 1)" -ForegroundColor Green
+Write-Host "  OK npm found: $(npm --version)" -ForegroundColor Green
+Write-Host "  OK composer found: $(composer --version)" -ForegroundColor Green
+Write-Host "  OK php found: $(php --version | Select-Object -First 1)" -ForegroundColor Green
 
 # 2. Build assets
 Write-Host "`n[2/6] Building assets with Vite..." -ForegroundColor Yellow
@@ -36,7 +36,7 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: Build failed!" -ForegroundColor Red
     exit 1
 }
-Write-Host "  ✓ Assets built successfully" -ForegroundColor Green
+Write-Host "  OK Assets built successfully" -ForegroundColor Green
 
 # 3. Install production dependencies
 Write-Host "`n[3/6] Installing production dependencies..." -ForegroundColor Yellow
@@ -45,14 +45,14 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: Composer install failed!" -ForegroundColor Red
     exit 1
 }
-Write-Host "  ✓ Dependencies installed" -ForegroundColor Green
+Write-Host "  OK Dependencies installed" -ForegroundColor Green
 
 # 4. Clear caches
 Write-Host "`n[4/6] Clearing caches..." -ForegroundColor Yellow
 php artisan cache:clear 2>$null
 php artisan config:clear 2>$null
 php artisan view:clear 2>$null
-Write-Host "  ✓ Caches cleared" -ForegroundColor Green
+Write-Host "  OK Caches cleared" -ForegroundColor Green
 
 # 5. Create deployment package
 Write-Host "`n[5/6] Creating deployment package..." -ForegroundColor Yellow
@@ -77,14 +77,14 @@ $files = @(".env.example", "artisan", "composer.json", "composer.lock", "package
 foreach ($folder in $folders) {
     if (Test-Path $folder) {
         Copy-Item $folder "$deployFolder/" -Recurse -Force
-        Write-Host "  ✓ Copied: $folder" -ForegroundColor Gray
+        Write-Host "  OK Copied: $folder" -ForegroundColor Gray
     }
 }
 
 foreach ($file in $files) {
     if (Test-Path $file) {
         Copy-Item $file "$deployFolder/" -Force
-        Write-Host "  ✓ Copied: $file" -ForegroundColor Gray
+        Write-Host "  OK Copied: $file" -ForegroundColor Gray
     }
 }
 
@@ -193,7 +193,7 @@ Atau import database via phpMyAdmin (kalau sudah ada dump SQL).
 '@
 $readme | Out-File "$deployFolder/DEPLOY_README.txt" -Encoding UTF8
 
-Write-Host "  ✓ Deployment package created" -ForegroundColor Green
+Write-Host "  OK Deployment package created" -ForegroundColor Green
 
 # 6. Create ZIP
 Write-Host "`n[6/6] Creating ZIP archive..." -ForegroundColor Yellow
@@ -205,7 +205,7 @@ Remove-Item $deployFolder -Recurse -Force
 # Summary
 $zipSize = (Get-Item $zipFile).Length / 1MB
 Write-Host "`n==========================================" -ForegroundColor Green
-Write-Host "  BUILD SELESAI! ✅" -ForegroundColor Green
+Write-Host "  BUILD SELESAI!" -ForegroundColor Green
 Write-Host "==========================================" -ForegroundColor Green
 Write-Host "File: $zipFile" -ForegroundColor Cyan
 Write-Host "Size: $([math]::Round($zipSize, 2)) MB" -ForegroundColor Cyan
@@ -215,4 +215,4 @@ Write-Host "2. Extract di public_html/" -ForegroundColor White
 Write-Host "3. Buat database di cPanel" -ForegroundColor White
 Write-Host "4. Edit .env dengan credential DB" -ForegroundColor White
 Write-Host "5. Baca DEPLOY_README.txt untuk detail lengkap" -ForegroundColor White
-Write-Host "`nSelamat mencoba! 🚀" -ForegroundColor Green
+Write-Host "`nSelamat mencoba!" -ForegroundColor Green
