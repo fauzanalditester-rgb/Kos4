@@ -1,6 +1,13 @@
 -- Kos Harmoni Pro - Database Schema
--- Import file ini ke phpMyAdmin untuk setup database lokal
--- Database name: kos_harmoni
+-- Import file ini ke phpMyAdmin untuk setup database
+-- Database name: u353387484_koskosan (sesuai .env)
+
+-- ============================================
+-- CREATE DATABASE IF NOT EXISTS
+-- ============================================
+
+CREATE DATABASE IF NOT EXISTS `u353387484_koskosan` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `u353387484_koskosan`;
 
 -- ============================================
 -- DROP TABLES IF EXIST (CLEAN INSTALL)
